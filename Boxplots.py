@@ -1,6 +1,7 @@
 # Fichero encargado de la lectura de los resultados de las predicciones y de representar los boxplots
 
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 from scipy import stats
 
@@ -101,33 +102,43 @@ ax.set_xticklabels(['SMOReg', 'REPTree','IBk','GaussianProcesses'])
 
 plt.yticks(np.arange(0.00,1.05,0.05))
 
+num_bins=15
+
+blue_patch = mpatches.Patch(color='blue', label='Original')
+green_patch = mpatches.Patch(color='green', label='Nuevo')
+
 figSMOreg=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist([data_to_plot1[0],data_to_plot2[0]])
+plt.hist([data_to_plot1[0],data_to_plot2[0]],num_bins,label='Original')
 plt.title("Histograma de los datos originales y nuevos de SMOreg")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
+plt.legend(handles=[blue_patch,green_patch])
+
 figREPTRee=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist(data_to_plot1[1])
+plt.hist(data_to_plot1[1],num_bins)
 plt.title("Histograma de los datos de REPTree")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
+
 figIBk=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist(data_to_plot1[2])
+plt.hist(data_to_plot1[2],num_bins)
 plt.title("Histograma de los datos de IBK")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
+
 figGP=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist([data_to_plot1[3], data_to_plot2[3]])
+plt.hist([data_to_plot1[3], data_to_plot2[3]],num_bins)
 plt.title("Histograma de los datos originales y nuevos de GaussianProcesses")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
+plt.legend(handles=[blue_patch,green_patch])
 
 # Descomentar para ver las gráficas
-#plt.show()
+# plt.show()
 
 # Test de Gaussianidad(kstest perform the Kolmogorov-Smirnov test for goodness of fit)
 datos = np.asarray(data_to_plot1[3])
