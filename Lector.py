@@ -7,7 +7,7 @@ path = "C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos
 files_list = os.listdir(path)
 files_num = len(files_list)
 days = int(files_num / 288) # Cada día son 288 ficheros tomados cada 5 minutos
-print("Tenemos " + str(files_num) + " ficheros de topología, es decir, " + str(days))
+print("Tenemos " + str(files_num) + " ficheros de topología, es decir, " + str(days) + " días")
 
 # 6 días de conjunto de entrenamiento + 1 día de conjunto de test(1728 + 288 muestras)
 days_training = 6
