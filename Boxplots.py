@@ -26,8 +26,9 @@ fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
 x = range(len(means))
 plt.bar(x, means, 1/5, color="blue", align='center')
-plt.xticks(range(len(means)),['SMOReg', 'REPTree','IBk','GaussianProcesses'])
+plt.xticks(range(len(means)),['SMOreg', 'REPTree','IBk','GaussianProcesses'])
 plt.title("Average MAE original")
+plt.yticks(np.arange(0.00,0.25,0.05))
 
 # Create a figure instance
 fig = plt.figure(figure_num, figsize=(9, 6))
@@ -62,7 +63,7 @@ for median in bp['medians']:
 for flier in bp['fliers']:
     flier.set(marker='o', color='#e7298a', alpha=0.5)
 
-ax.set_xticklabels(['SMOReg', 'REPTree','IBk','GaussianProcesses'])
+ax.set_xticklabels(['SMOreg', 'REPTree','IBk','GaussianProcesses'])
 
 plt.yticks(np.arange(0.00,1.05,0.05))
 
@@ -82,8 +83,9 @@ fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
 x = range(len(means2))
 plt.bar(x, means2, 1/5, color="green", align='center')
-plt.xticks(range(len(means2)),['SMOReg', 'REPTree','IBk','GaussianProcesses'])
+plt.xticks(range(len(means2)),['SMOreg', 'REPTree','IBk','GaussianProcesses'])
 plt.title("Average MAE después de la mejora de SMOreg y GaussianProcesses")
+plt.yticks(np.arange(0.00,0.25,0.05))
 
 # Create a figure instance
 fig = plt.figure(figure_num, figsize=(9, 6))
@@ -94,7 +96,7 @@ ax = fig.add_subplot(111)
 # Create the boxplot
 bp = ax.boxplot(data_to_plot2, patch_artist=True)
 
-ax.set_title("Comparación de los 4 algoritmos, después de la mejora en SMOreg y GaussianProcesses")
+ax.set_title("Comparación de los 4 algoritmos, después de la mejora en SMOreg y GP")
 
 for box in bp['boxes']:
     # change outline color
