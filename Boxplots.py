@@ -20,7 +20,7 @@ for i in range(len(files_name)):
             values.append(float(line))
     means.append(np.asarray(values).mean())
     data_to_plot1.append(values)
-
+print(means)
 # Create a figure instance
 fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
@@ -71,21 +71,21 @@ data_to_plot2= []
 means2 = []
 for i in range(len(files_name)):
     values = []
-    f = open(path + "resultadosBis" + files_name[i]+".txt")
+    f = open(path + "resultados2" + files_name[i]+".txt")
     for line in f:
         if len(line)!=0:
             values.append(float(line))
     means2.append(np.asarray(values).mean())
     data_to_plot2.append(values)
-
+print(means2)
 # Create a figure instance
 fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
 x = range(len(means2))
 plt.bar(x, means2, 1/5, color="green", align='center')
 plt.xticks(range(len(means2)),['SMOreg', 'REPTree','IBk','GaussianProcesses'])
-plt.title("Average MAE después de la mejora de SMOreg y GaussianProcesses")
-plt.yticks(np.arange(0.00,0.25,0.05))
+plt.title("Average MAE después de cambiar el método de predicción")
+plt.yticks(np.arange(0.00,0.10,0.005))
 
 # Create a figure instance
 fig = plt.figure(figure_num, figsize=(9, 6))
@@ -96,7 +96,7 @@ ax = fig.add_subplot(111)
 # Create the boxplot
 bp = ax.boxplot(data_to_plot2, patch_artist=True)
 
-ax.set_title("Comparación de los 4 algoritmos, después de la mejora en SMOreg y GP")
+ax.set_title("Comparación de los 4 algoritmos, después de la cambiar el método de predicción")
 
 for box in bp['boxes']:
     # change outline color
@@ -140,23 +140,25 @@ plt.xticks(np.arange(0.00,1.1,0.1))
 
 figREPTRee=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist(data_to_plot1[1],num_bins)
-plt.title("Histograma de los datos de REPTree")
+plt.hist([data_to_plot1[1],data_to_plot2[1]],num_bins,label='Original')
+plt.title("Histograma de los datos originales y nuevos de REPTree")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
+plt.legend(handles=[blue_patch,green_patch])
 plt.xticks(np.arange(0.00,1.1,0.1))
 
 figIBk=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist(data_to_plot1[2],num_bins)
-plt.title("Histograma de los datos de IBK")
+plt.hist([data_to_plot1[2],data_to_plot2[2]],num_bins,label='Original')
+plt.title("Histograma de los datos originales y nuevos de IBK")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
+plt.legend(handles=[blue_patch,green_patch])
 plt.xticks(np.arange(0.00,1.1,0.1))
 
 figGP=plt.figure(figure_num,figsize=(9,6))
 figure_num+=1
-plt.hist([data_to_plot1[3], data_to_plot2[3]],num_bins)
+plt.hist([data_to_plot1[3], data_to_plot2[3]],num_bins,label='Original')
 plt.title("Histograma de los datos originales y nuevos de GaussianProcesses")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
@@ -167,9 +169,8 @@ plt.xticks(np.arange(0.00,1.1,0.1))
 plt.show()
 
 # Test de Gaussianidad(kstest perform the Kolmogorov-Smirnov test for goodness of fit)
-datos = np.asarray(data_to_plot1[3])
-normed_data=((datos-datos.mean())/datos.std())
-print(stats.kstest(normed_data,'norm'))
+datos = np.asarray(data_to_plot2[3])
+print(stats.kstest(datos,'norm',args=(datos.mean(),datos.std())))
 print("Como el pvalue es 0, rechazamos la hipótesis nula de que las dos distribuciones sean iguales "
       "es decir, los datos NO son gaussianos")
 
