@@ -71,7 +71,7 @@ data_to_plot2= []
 means2 = []
 for i in range(len(files_name)):
     values = []
-    f = open(path + "resultados2" + files_name[i]+".txt")
+    f = open(path + "resultados3" + files_name[i]+".txt")
     for line in f:
         if len(line)!=0:
             values.append(float(line))
@@ -84,7 +84,7 @@ figure_num+=1
 x = range(len(means2))
 plt.bar(x, means2, 1/5, color="green", align='center')
 plt.xticks(range(len(means2)),['SMOreg', 'REPTree','IBk','GaussianProcesses'])
-plt.title("Average MAE después de cambiar el método de predicción")
+plt.title("Average MAE después de cambiar el método de predicción y ajustar k")
 plt.yticks(np.arange(0.00,0.10,0.005))
 
 # Create a figure instance
@@ -96,7 +96,7 @@ ax = fig.add_subplot(111)
 # Create the boxplot
 bp = ax.boxplot(data_to_plot2, patch_artist=True)
 
-ax.set_title("Comparación de los 4 algoritmos, después de la cambiar el método de predicción")
+ax.set_title("Boxplots, después de la cambiar el método de predicción y ajustar k")
 
 for box in bp['boxes']:
     # change outline color
@@ -168,10 +168,38 @@ plt.xticks(np.arange(0.00,1.1,0.1))
 # Descomentar para ver las gráficas
 plt.show()
 
-# Test de Gaussianidad(kstest perform the Kolmogorov-Smirnov test for goodness of fit)
-datos = np.asarray(data_to_plot2[3])
-print(stats.kstest(datos,'norm',args=(datos.mean(),datos.std())))
-print("Como el pvalue es 0, rechazamos la hipótesis nula de que las dos distribuciones sean iguales "
-      "es decir, los datos NO son gaussianos")
+datos1 = np.asarray(data_to_plot2[0])
+datos2 = np.asarray(data_to_plot2[1])
+datos3 = np.asarray(data_to_plot2[2])
+datos4 = np.asarray(data_to_plot2[3])
 
-# Entonces t-test no se hace
+def twoSampZ(X1, X2, mudiff, sd1, sd2, n1, n2):
+    from numpy import sqrt, abs, round
+    from scipy.stats import norm
+    pooledSE = sqrt(sd1**2/n1 + sd2**2/n2)
+    z = ((X1 - X2) - mudiff)/pooledSE
+    pval = 2*(1 - norm.cdf(abs(z)))
+    return round(z, 3), round(pval, 4)
+# Función obtenida en http://stats.stackexchange.com/questions/124096/two-samples-z-test-in-python
+# El procedimiento es el mismo que el del libro
+
+z, p = twoSampZ(datos1.mean(), datos2.mean(), 0, datos1.std(), datos2.std(), 979, 979)
+print(z, p)
+
+z, p = twoSampZ(datos1.mean(), datos3.mean(), 0, datos1.std(), datos3.std(), 979, 979)
+print(z, p)
+
+z, p = twoSampZ(datos1.mean(), datos4.mean(), 0, datos1.std(), datos4.std(), 979, 979)
+print(z, p)
+
+z, p = twoSampZ(datos2.mean(), datos3.mean(), 0, datos2.std(), datos3.std(), 979, 979)
+print(z, p)
+
+z, p = twoSampZ(datos2.mean(), datos4.mean(), 0, datos2.std(), datos4.std(), 979, 979)
+print(z, p)
+
+z, p = twoSampZ(datos3.mean(), datos4.mean(), 0, datos3.std(), datos4.std(), 979, 979)
+print(z, p)
+
+# Se comprueba que las medias no son iguales
+
