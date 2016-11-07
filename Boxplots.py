@@ -84,8 +84,8 @@ figure_num+=1
 x = range(len(means2))
 plt.bar(x, means2, 1/5, color="green", align='center')
 plt.xticks(range(len(means2)),['SMOreg', 'REPTree','IBk','GaussianProcesses'])
-plt.title("Average MAE después de cambiar el método de predicción y ajustar k")
-plt.yticks(np.arange(0.00,0.10,0.005))
+plt.title("Average MAE obtenido con los cuatro algoritmos")
+plt.yticks(np.arange(0.00,0.05,0.005))
 
 # Create a figure instance
 fig = plt.figure(figure_num, figsize=(9, 6))
@@ -96,7 +96,7 @@ ax = fig.add_subplot(111)
 # Create the boxplot
 bp = ax.boxplot(data_to_plot2, patch_artist=True)
 
-ax.set_title("Boxplots, después de la cambiar el método de predicción y ajustar k")
+ax.set_title("Comparativa en forma de boxplots de los cuatro algoritmos")
 
 for box in bp['boxes']:
     # change outline color
@@ -122,7 +122,7 @@ for flier in bp['fliers']:
 
 ax.set_xticklabels(['SMOReg', 'REPTree','IBk','GaussianProcesses'])
 
-plt.yticks(np.arange(0.00,1.05,0.05))
+plt.yticks(np.arange(0.00,0.65,0.05))
 
 num_bins=20
 
@@ -163,6 +163,19 @@ plt.title("Histograma de los datos originales y nuevos de GaussianProcesses")
 plt.xlabel("Valor")
 plt.ylabel("Frecuencia")
 plt.legend(handles=[blue_patch,green_patch])
+plt.xticks(np.arange(0.00,1.1,0.1))
+
+blue_patch = mpatches.Patch(color='blue', label='SMOReg')
+green_patch = mpatches.Patch(color='green', label='REPTree')
+red_patch = mpatches.Patch(color='red', label='IBk')
+cyan_patch = mpatches.Patch(color='cyan', label='GaussianProcesses')
+figComp=plt.figure(figure_num,figsize=(9,6))
+figure_num+=1
+plt.hist([data_to_plot2[0], data_to_plot2[1],data_to_plot2[2],data_to_plot2[3]],num_bins,label='Original',)
+plt.title("Histograma de los valores de MAE obtenidos")
+plt.xlabel("Valor")
+plt.ylabel("Frecuencia")
+plt.legend(handles=[blue_patch,green_patch,red_patch,cyan_patch])
 plt.xticks(np.arange(0.00,1.1,0.1))
 
 # Descomentar para ver las gráficas
