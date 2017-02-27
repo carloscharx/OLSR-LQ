@@ -142,46 +142,92 @@ for key in variable_links:
 print("Tenemos un total de " + str(len(final_links)) + " después de eliminar enlaces de los que no hay suficientes datos para entrenar, y aquellos con conjunto de entrenamiento constante")
 
 
-# Ahora debemos crear los ficheros .arff para Weka
+# Ahora debemos crear el fichero .arff para MOA
 i=0
 for key in final_links:
 
-    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOA/link" + str(i)+ ".arff", 'w')
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOAatributos/link" + str(i)+ ".arff", 'w')
     f.write("% Documento para utilizarse en Weka\n")
     f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-12" + " numeric""\n")
+    f.write("@attribute " + "Link-11" + " numeric""\n")
+    f.write("@attribute " + "Link-10" + " numeric""\n")
+    f.write("@attribute " + "Link-9" + " numeric""\n")
+    f.write("@attribute " + "Link-8" + " numeric""\n")
+    f.write("@attribute " + "Link-7" + " numeric""\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Time" + " numeric""\n")
     f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
     f.write("\n@data\n\n")
     for k in range(len(data_set)):
+        if k >=12:
+            f.write(str(final_links[key][k-12]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=11:
+            f.write(str(final_links[key][k-11]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=10:
+            f.write(str(final_links[key][k-10]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=9:
+            f.write(str(final_links[key][k-9]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=8:
+            f.write(str(final_links[key][k-8]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=7:
+            f.write(str(final_links[key][k-7]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(k));
+        f.write(",")
         f.write(str(final_links[key][k]))
         f.write("\n")
     f.close()
     i+=1
-
-# Ahora creamos ficheros separados para training y para test
-i=0
-for key in final_links:
-
-    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOASeparados/link" + str(i)+"training" ".arff", 'w')
-    f.write("% Documento para utilizarse en Weka\n")
-    f.write("@relation OLSR\n\n")
-    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
-    f.write("\n@data\n\n")
-    for k in range(days_training*288):
-        f.write(str(final_links[key][k]))
-        f.write("\n")
-    f.close()
-
-    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOASeparados/link" + str(i)+"test" ".arff", 'w')
-    f.write("% Documento para utilizarse en Weka\n")
-    f.write("@relation OLSR\n\n")
-    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
-    f.write("\n@data\n\n")
-    for k in range(days_test*288):
-        f.write(str(final_links[key][k+288*days_training]))
-        f.write("\n")
-    f.close()
-
-    i+=1
-
-
-plt.show()
