@@ -1,3 +1,11 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+
+
+
+
+
 # Fichero encargado de la lectura de los ficheros de topología de la red OLSR, para después crear el fichero .arff
 
 import os # Biblioteca encargada de obtener el nombre de los ficheros del directorio
@@ -10,10 +18,10 @@ days = int(files_num / 288) # Cada día son 288 ficheros tomados cada 5 minutos
 print("Tenemos " + str(files_num) + " ficheros de topología, es decir, " + str(days) + " días")
 
 # 6 días de conjunto de entrenamiento + 1 día de conjunto de test(1728 + 288 muestras)
-# days_training = 6
-days_training = 1/24
-# days_test = 1
-days_test = 7-days_training
+days_training = 6
+#days_training = 1/24
+days_test = 1
+#days_test = 7-days_training
 length_data_set = int(days_training + days_test)* 288
 print("Tomamos " + str(length_data_set) + " ficheros de topología, para tener " + str(days_training) \
       + " días de conjunto de entrenamiento y " + str(days_test) + " de test")
@@ -82,10 +90,10 @@ for i in range(len(data_set)):
     f.close()
     links_num.append(lines_num)
 
-plt.figure(1)
-plt.plot(links_num)
-plt.ylabel("Número de enlaces, evolución temporal")
-plt.xlabel("Muestras tomadas cada 5 minutos")
+# plt.figure(1)
+# plt.plot(links_num)
+# plt.ylabel("Número de enlaces, evolución temporal")
+# plt.xlabel("Muestras tomadas cada 5 minutos")
 
 
 LQ_per_link = []
@@ -115,8 +123,8 @@ for i in range(len(data_set)):
     for line in f:
         words = line.split()
         if (len(words)) != 0:
-           if (words[0] + "-" + words[1]) in variable_links:
-               variable_links[words[0] + "-" + words[1]].append(words[2])
+            if (words[0] + "-" + words[1]) in variable_links:
+                variable_links[words[0] + "-" + words[1]].append(words[2])
 
     f.close()
     for key in variable_links:
@@ -143,69 +151,11 @@ for key in variable_links:
 
 print("Tenemos un total de " + str(len(final_links)) + " después de eliminar enlaces de los que no hay suficientes datos para entrenar, y aquellos con conjunto de entrenamiento constante")
 
+G = nx.Graph()
+for key in variable_links:
+    direcciones=key.split("-")
+    G.add_edge(direcciones[0],direcciones[1])
 
-# Ahora debemos crear los ficheros .arff para Weka
-i=0
-for key in final_links:
-
-    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosWeka1hora/link" + str(i)+ ".arff", 'w')
-    f.write("% Documento para utilizarse en Weka\n")
-    f.write("@relation OLSR\n\n")
-    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
-    f.write('@attribute timestamp date "yyyy-MM-dd-HH:mm:ss"\n')
-    f.write("\n@data\n\n")
-    for k in range(len(data_set)):
-        f.write(str(final_links[key][k]))
-        f.write(",")
-        f.write(dates[k] + "\n")
-    f.close()
-    i+=1
-
-# # Ahora creamos ficheros separados para training y para test
-# i=0
-# for key in final_links:
-#
-#     f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosWekaSeparados/link" + str(i)+"training" ".arff", 'w')
-#     f.write("% Documento para utilizarse en Weka\n")
-#     f.write("@relation OLSR\n\n")
-#     f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
-#     f.write('@attribute timestamp date "yyyy-MM-dd-HH:mm:ss"\n')
-#     f.write("\n@data\n\n")
-#     for k in range(days_training*288):
-#         f.write(str(final_links[key][k]))
-#         f.write(",")
-#         f.write(dates[k] + "\n")
-#     f.close()
-#
-#     f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosWekaSeparados/link" + str(i)+"test" ".arff", 'w')
-#     f.write("% Documento para utilizarse en Weka\n")
-#     f.write("@relation OLSR\n\n")
-#     f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
-#     f.write('@attribute timestamp date "yyyy-MM-dd-HH:mm:ss"\n')
-#     f.write("\n@data\n\n")
-#     for k in range(days_test*288):
-#         f.write(str(final_links[key][k+288*days_training]))
-#         f.write(",")
-#         f.write(dates[k+288*days_training] + "\n")
-#     f.close()
-#
-#     i+=1
-#
-# # También escribimos un único fichero por si nos hiciera falta
-# f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datos.arff", 'w')
-# f.write("% Documento para utilizarse en Weka\n")
-# f.write("@relation OLSR\n\n")
-# for i in range(len(final_links)):
-#     f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
-#
-# f.write('@attribute timestamp date "yyyy-MM-dd-HH:mm:ss"\n')
-# f.write("\n@data\n\n")
-# for i in range(len(data_set)):
-#     j=1
-#     for key in final_links:
-#         f.write(str(final_links[key][i]))
-#         f.write(",")
-#     f.write(dates[i] + "\n")
-# f.close
-#
-# plt.show()
+# nx.draw_circular(G)
+nx.draw_random(G)
+plt.show()

@@ -11,8 +11,10 @@ print("Tenemos " + str(files_num) + " ficheros de topología, es decir, " + str(
 
 # 6 días de conjunto de entrenamiento + 1 día de conjunto de test(1728 + 288 muestras)
 days_training = 6
+
 days_test = 1
-length_data_set = (days_training + days_test)* 288
+
+length_data_set = int(days_training + days_test)* 288
 print("Tomamos " + str(length_data_set) + " ficheros de topología, para tener " + str(days_training) \
       + " días de conjunto de entrenamiento y " + str(days_test) + " de test")
 
@@ -129,7 +131,7 @@ for key in variable_links:
     suma = 0.000
     max = 0.000
     min = 1.000
-    for i in range(days_training*288):
+    for i in range(int(days_training*288)):
         valor = float(variable_links[key][i])
         suma=suma + float(variable_links[key][i])
         if valor > max:
@@ -146,7 +148,7 @@ print("Tenemos un total de " + str(len(final_links)) + " después de eliminar en
 i=0
 for key in final_links:
 
-    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOAatributos/link" + str(i)+ ".arff", 'w')
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag12/link" + str(i)+ ".arff", 'w')
     f.write("% Documento para utilizarse en Weka\n")
     f.write("@relation OLSR\n\n")
     f.write("@attribute " + "Link-12" + " numeric""\n")
@@ -161,7 +163,6 @@ for key in final_links:
     f.write("@attribute " + "Link-3" + " numeric""\n")
     f.write("@attribute " + "Link-2" + " numeric""\n")
     f.write("@attribute " + "Link-1" + " numeric""\n")
-    f.write("@attribute " + "Time" + " numeric""\n")
     f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
     f.write("\n@data\n\n")
     for k in range(len(data_set)):
@@ -225,7 +226,572 @@ for key in final_links:
         else:
             f.write(str(0))
         f.write(",")
-        f.write(str(k));
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag11/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-11" + " numeric""\n")
+    f.write("@attribute " + "Link-10" + " numeric""\n")
+    f.write("@attribute " + "Link-9" + " numeric""\n")
+    f.write("@attribute " + "Link-8" + " numeric""\n")
+    f.write("@attribute " + "Link-7" + " numeric""\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=11:
+            f.write(str(final_links[key][k-11]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=10:
+            f.write(str(final_links[key][k-10]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=9:
+            f.write(str(final_links[key][k-9]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=8:
+            f.write(str(final_links[key][k-8]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=7:
+            f.write(str(final_links[key][k-7]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag10/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-10" + " numeric""\n")
+    f.write("@attribute " + "Link-9" + " numeric""\n")
+    f.write("@attribute " + "Link-8" + " numeric""\n")
+    f.write("@attribute " + "Link-7" + " numeric""\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=10:
+            f.write(str(final_links[key][k-10]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=9:
+            f.write(str(final_links[key][k-9]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=8:
+            f.write(str(final_links[key][k-8]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=7:
+            f.write(str(final_links[key][k-7]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag9/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-9" + " numeric""\n")
+    f.write("@attribute " + "Link-8" + " numeric""\n")
+    f.write("@attribute " + "Link-7" + " numeric""\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=9:
+            f.write(str(final_links[key][k-9]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=8:
+            f.write(str(final_links[key][k-8]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=7:
+            f.write(str(final_links[key][k-7]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag8/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-8" + " numeric""\n")
+    f.write("@attribute " + "Link-7" + " numeric""\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=8:
+            f.write(str(final_links[key][k-8]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=7:
+            f.write(str(final_links[key][k-7]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag7/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-7" + " numeric""\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=7:
+            f.write(str(final_links[key][k-7]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag6/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-6" + " numeric""\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=6:
+            f.write(str(final_links[key][k-6]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag5/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-5" + " numeric""\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=5:
+            f.write(str(final_links[key][k-5]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag4/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-4" + " numeric""\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=4:
+            f.write(str(final_links[key][k-4]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag3/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-3" + " numeric""\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=3:
+            f.write(str(final_links[key][k-3]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag2/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-2" + " numeric""\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=2:
+            f.write(str(final_links[key][k-2]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
+        f.write(",")
+        f.write(str(final_links[key][k]))
+        f.write("\n")
+    f.close()
+    i+=1
+
+# Ahora debemos crear el fichero .arff para MOA
+i=0
+for key in final_links:
+
+    f = open("C:/Users/carloscharx/Documentos/Teleco/4º Teleco/Prácticas y TFG/datos-Funkfeuer-CONFINE/datosMOALag1/link" + str(i)+ ".arff", 'w')
+    f.write("% Documento para utilizarse en Weka\n")
+    f.write("@relation OLSR\n\n")
+    f.write("@attribute " + "Link-1" + " numeric""\n")
+    f.write("@attribute " + "Link" + str(i)+ " numeric""\n")
+    f.write("\n@data\n\n")
+    for k in range(len(data_set)):
+        if k >=1:
+            f.write(str(final_links[key][k-1]))
+        else:
+            f.write(str(0))
         f.write(",")
         f.write(str(final_links[key][k]))
         f.write("\n")
