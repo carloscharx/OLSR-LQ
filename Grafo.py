@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 
-# Fichero encargado de la lectura de los ficheros de topología de la red OLSR, para después crear el fichero .arff
+# Fichero encargado de la lectura de los ficheros de topología de la red OLSR, para después crear el grafo
 
 import os # Biblioteca encargada de obtener el nombre de los ficheros del directorio
 import matplotlib.pyplot as plt # Biblioteca encargada de realizar gráficas
@@ -22,7 +22,7 @@ days_training = 6
 #days_training = 1/24
 days_test = 1
 #days_test = 7-days_training
-length_data_set = int(days_training + days_test)* 288
+length_data_set = int(days_training + days_test) *  288
 print("Tomamos " + str(length_data_set) + " ficheros de topología, para tener " + str(days_training) \
       + " días de conjunto de entrenamiento y " + str(days_test) + " de test")
 
@@ -90,10 +90,17 @@ for i in range(len(data_set)):
     f.close()
     links_num.append(lines_num)
 
-# plt.figure(1)
+plt.figure(1)
+Gglobal = nx.Graph()
+for key in links:
+    direcciones=key.split("-")
+    Gglobal.add_edge(direcciones[0],direcciones[1])
+
+nx.draw_random(Gglobal)
+
 # plt.plot(links_num)
-# plt.ylabel("Número de enlaces, evolución temporal")
-# plt.xlabel("Muestras tomadas cada 5 minutos")
+# plt.ylabel("Número de enlaces, evolución temporal a lo largo de 7 días")
+# plt.xlabel("Medidas tomadas cada 5 minutos")
 
 
 LQ_per_link = []
@@ -102,11 +109,20 @@ for key in links:
 
 print("Tenemos un total de " + str(len(LQ_per_link)) +" enlaces, antes de eliminar los enlaces que no varían")
 
-
+plt.figure(2)
+G = nx.Graph()
 variable_links = {} # Enlaces que varían
+i=0
 for key in links:
+
     if len(links[key])!=length_data_set or (len(links[key])==length_data_set and max(links[key])!=min(links[key])):
         variable_links[key] = [] # Simplemente asigno un vector vacío para después ya meter los datos finales de LQ
+        i+=1
+    # else:
+    #     direcciones=key.split("-")
+    #     G.add_edge(direcciones[0],direcciones[1],color='b',weigth=1)# añadimos al grafo los enlaces de calidad constante
+
+print(i)
 
 print("Tenemos un total de " + str(len(variable_links)) + " enlaces, después de eliminar los enlaces \
 que no varían, y antes de eliminar los enlaces de los que no hay suficientes datos para entrenar")
@@ -148,14 +164,31 @@ for key in variable_links:
             min = valor
     if suma!=0.000 and min!=max:
         final_links[key]=variable_links[key]
+    # else:
+    #     direcciones=key.split("-")
+    #     G.add_edge(direcciones[0],direcciones[1],color='r',weigth=1)# añadimos al grafo los enlaces con calidad constante(en el entrenamiento) y aquellos sin conjunto de entrenamiento
+
 
 print("Tenemos un total de " + str(len(final_links)) + " después de eliminar enlaces de los que no hay suficientes datos para entrenar, y aquellos con conjunto de entrenamiento constante")
 
-G = nx.Graph()
-for key in variable_links:
+for key in final_links:
     direcciones=key.split("-")
-    G.add_edge(direcciones[0],direcciones[1])
+    G.add_edge(direcciones[0],direcciones[1],color='g',weigth=1)
 
 # nx.draw_circular(G)
-nx.draw_random(G)
+
+print(G.number_of_nodes())
+print(G.number_of_edges())
+print(Gglobal.number_of_nodes())
+print(Gglobal.number_of_edges())
+# nx.draw_random(G)
+# plt.show()
+
+pos = nx.random_layout(G)
+
+edges = G.edges()
+colors = [G[u][v]['color'] for u,v in edges]
+weigths = [G[u][v]['weigth'] for u,v in edges]
+
+nx.draw(G, pos, edges=edges, edge_color=colors, width=weigths)
 plt.show()

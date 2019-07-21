@@ -25,9 +25,9 @@ print(means)
 fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
 x = range(len(means))
-plt.bar(x, means, 1/5, color="blue", align='center')
+plt.bar(x, means, 1/5, color="#566ADA", align='center')
 plt.xticks(range(len(means)),['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'])
-plt.title("Average MAE de SMOReg para lag window desde 1 hasta 24")
+plt.title("MAE promedio de SVM para lag window desde 1 hasta 24")
 plt.yticks(np.arange(0.00,0.025,0.002))
 plt.grid()
 
@@ -36,17 +36,17 @@ fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
 # Create an axes instance
 ax = fig.add_subplot(111)
-
+ax.grid(True)
 # Create the boxplot
 bp = ax.boxplot(data_to_plot1, patch_artist=True)
 
-ax.set_title("Comparación de SMOReg para valores de lag window desde 1 hasta 24")
+ax.set_title("Boxplots de SVM para valores de lag window desde 1 hasta 24")
 
 for box in bp['boxes']:
     # change outline color
     box.set( color='#7570b3', linewidth=2)
     # change fill color
-    box.set( facecolor = '#1b9e77' )
+    box.set( facecolor = '#566ADA' )
 
 ## change color and linewidth of the whiskers
 for whisker in bp['whiskers']:

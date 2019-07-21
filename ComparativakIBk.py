@@ -32,9 +32,10 @@ print(means)
 fig = plt.figure(figure_num, figsize=(9, 6))
 figure_num+=1
 x = range(len(means))
-plt.bar(x, means, 1/5, color="blue", align='center')
+plt.bar(x, means, 1/5, color="#E11515", align='center')
+plt.grid(True)
 plt.xticks(range(len(means)),['k=1','k=2','k=3','k=4','k=5','k=6','k=7','k=8','k=9','k=10','k=X'])
-plt.title("Average MAE de IBk para k=1 hasta k=10 y XV")
+plt.title("MAE promedio de kNN para k=1 hasta k=10 y XV")
 plt.yticks(np.arange(0.00,0.06,0.005))
 
 # Create a figure instance
@@ -46,13 +47,14 @@ ax = fig.add_subplot(111)
 # Create the boxplot
 bp = ax.boxplot(data_to_plot1, patch_artist=True)
 
-ax.set_title("Comparación de IBk para los valores de k=1 hasta k=10 y XV")
+ax.set_title("Boxplots de kNN para los valores de k=1 hasta k=10 y XV")
+ax.grid(True)
 
 for box in bp['boxes']:
     # change outline color
     box.set( color='#7570b3', linewidth=2)
     # change fill color
-    box.set( facecolor = '#1b9e77' )
+    box.set( facecolor = '#E11515' )
 
 ## change color and linewidth of the whiskers
 for whisker in bp['whiskers']:
